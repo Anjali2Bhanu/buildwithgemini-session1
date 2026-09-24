@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const sidebar = document.getElementById("sidebar");
+  const sidebarOverlay = document.getElementById("sidebarOverlay");
   const openSidebarBtn = document.getElementById("openSidebarBtn");
   const closeSidebarBtn = document.getElementById("closeSidebarBtn");
   const newChatBtn = document.getElementById("newChatBtn");
@@ -40,6 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return 'session-' + Math.random().toString(36).substring(2, 9);
   }
 
+  function openSidebar() {
+    sidebar.classList.remove("collapsed");
+    sidebar.classList.add("open");
+    if (sidebarOverlay) sidebarOverlay.classList.add("active");
+  }
+
+  function closeSidebar() {
+    sidebar.classList.add("collapsed");
+    sidebar.classList.remove("open");
+    if (sidebarOverlay) sidebarOverlay.classList.remove("active");
+  }
+
   // Initialize UI State
   function init() {
     localStorage.setItem("active_session_id", currentSessionId);
@@ -48,8 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSessionMessages();
 
     // Event Listeners
-    openSidebarBtn.addEventListener("click", () => sidebar.classList.remove("collapsed"));
-    closeSidebarBtn.addEventListener("click", () => sidebar.classList.add("collapsed"));
+    if (openSidebarBtn) openSidebarBtn.addEventListener("click", openSidebar);
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
     newChatBtn.addEventListener("click", createNewChat);
 
     modelSelect.addEventListener("change", () => {
@@ -105,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userInput.value = "";
     autoResizeTextarea();
     renderHistoryList();
+    if (window.innerWidth <= 768) closeSidebar();
   }
 
   function loadSessionMessages() {
@@ -156,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("active_session_id", currentSessionId);
         renderHistoryList();
         loadSessionMessages();
+        if (window.innerWidth <= 768) closeSidebar();
       });
 
       historyList.appendChild(item);
