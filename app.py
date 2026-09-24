@@ -186,6 +186,6 @@ os.makedirs("static", exist_ok=True)
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
+    port = int(os.environ.get("PORT", 8085))
     logger.info(f"Starting ChatGPT Agentic Web App on http://0.0.0.0:{port}")
     uvicorn.run(app, host="0.0.0.0", port=port)
