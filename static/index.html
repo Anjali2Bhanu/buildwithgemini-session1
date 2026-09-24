@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatGPT Agentic AI — Powered by Gemini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <!-- Highlight.js for Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/tokyo-night-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <!-- Marked.js for Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <button class="new-chat-btn" id="newChatBtn">
+          <i class="fa-solid fa-plus"></i> New Chat
+        </button>
+        <button class="sidebar-toggle-btn" id="closeSidebarBtn" title="Close Sidebar">
+          <i class="fa-solid fa-sidebar"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-title"><i class="fa-solid fa-sliders"></i> Model Selection</div>
+        <select id="modelSelect" class="model-dropdown">
+          <option value="gemini-2.5-flash" selected>⚡ Gemini 2.5 Flash (Fast Agent)</option>
+          <option value="gemini-3.6-pro">🧠 Gemini 3.6 Pro (Deep Reasoning)</option>
+          <option value="gemini-1.5-flash-lite">🚀 Gemini 1.5 Flash Lite</option>
+        </select>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-title"><i class="fa-solid fa-screwdriver-wrench"></i> Agent Tools</div>
+        <div class="tool-toggle-item">
+          <span><i class="fa-solid fa-globe text-cyan"></i> Google Search</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleSearch" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="tool-toggle-item">
+          <span><i class="fa-brands fa-python text-yellow"></i> Python Sandbox</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleCode" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="sidebar-history-container">
+        <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Chat History</div>
+        <div class="history-list" id="historyList">
+          <!-- Dynamically populated past chats -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          <div class="user-info">
+            <span class="user-name">Developer User</span>
+            <span class="user-status">Online · Agentic Mode</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="menu-btn" id="openSidebarBtn" title="Open Sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="brand">
+            <i class="fa-solid fa-sparkles brand-icon"></i>
+            <span class="brand-title">ChatGPT Agentic</span>
+            <span class="badge-tag" id="currentModelBadge">Gemini 2.5 Flash</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="status-indicator">
+            <span class="dot"></span> Agent Ready
+          </div>
+        </div>
+      </header>
+
+      <!-- Messages & Conversation Canvas -->
+      <div class="chat-container" id="chatContainer">
+        <!-- Hero Starter Screen (visible when chat is empty) -->
+        <div class="hero-screen" id="heroScreen">
+          <div class="hero-logo">
+            <div class="glow-orb"></div>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <h1>What would you like to build or explore today?</h1>
+          <p class="hero-subtitle">Powered by Google Gemini & ADK agentic tools</p>
+
+          <div class="prompt-cards-grid">
+            <div class="prompt-card" data-prompt="What are the latest breakthroughs in AI search and LLMs today?">
+              <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
+              <div class="card-title">Search Live Web</div>
+              <div class="card-desc">Fetch real-time news & information via Google Search</div>
+            </div>
+
+            <div class="prompt-card" data-prompt="Write and execute a Python script to compute prime numbers up to 100 with execution stats.">
+              <div class="card-icon"><i class="fa-brands fa-python"></i></div>
+              <div class="card-title">Run Code Sandbox</div>
+              <div class="card-desc">Execute Python code live in an isolated execution sandbox</div>
+            </div>
+
+            <div class="prompt-card" data-prompt="Create a Python data visualization algorithm or math matrix multiplication benchmark.">
+              <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
+              <div class="card-title">Complex Data Math</div>
+              <div class="card-desc">Solve algorithmic problems & run mathematical proofs</div>
+            </div>
+
+            <div class="prompt-card" data-prompt="Explain how Agentic AI architectures work with tools, memory, and planners.">
+              <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+              <div class="card-title">Agent Architectures</div>
+              <div class="card-desc">Deep dive into multi-agent systems and ADK patterns</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Message List -->
+        <div class="message-list" id="messageList"></div>
+      </div>
+
+      <!-- Input Bar Container -->
+      <div class="input-wrapper">
+        <div class="input-card">
+          <div class="active-tools-bar">
+            <span class="active-chip" id="chipSearch"><i class="fa-solid fa-globe"></i> Search ON</span>
+            <span class="active-chip" id="chipCode"><i class="fa-brands fa-python"></i> Python Sandbox ON</span>
+          </div>
+
+          <div class="input-row">
+            <textarea 
+              id="userInput" 
+              placeholder="Ask anything, execute Python code, or search the web..." 
+              rows="1"
+            ></textarea>
+
+            <div class="input-actions">
+              <button class="action-icon-btn" id="micBtn" title="Voice Input (Simulated)">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <button class="send-btn" id="sendBtn" title="Send Message">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="footer-note">
+          ChatGPT Agentic AI may produce inaccurate information. Powered by Google Cloud Gemini & ADK.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
